@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  <title>Note Pal</title>
+  
+  <style>
+
+    body{
+      background-color: rgb(163, 66, 66);
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .main{
+      height: 90vh;
+      width: 350px;
+      margin: 50px auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgb(231, 231, 231);
+      border-radius: 10px;
+    }
+
+    nav{
+      height: 40px;
+      width: 350px;
+      margin: 0px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      border-radius: 7px;
+      box-shadow: 0px 4px 4px rgb(180, 180, 180);
+    }
+
+    .display{
+      height: 80vh;
+      width: 350px;
+      margin: 20px auto;
+      overflow-y: scroll;
+    }
+    .display::-webkit-scrollbar{
+      display: none;
+    }
+
+    .inputs{
+      width: 320px;
+      padding: 10px;
+      background-color: white;
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+
+    #add{
+      height: 50px;
+      width: 50px;
+      position: relative;
+      left: 150px;
+      border: none;
+      border-radius: 7px;
+      background-color: black;
+      color: white;
+      box-shadow: 0px 4px 4px rgb(180, 180, 180);
+    }
+    
+    #header{
+      height: 50px;
+      width: 280px;
+      margin: 10px auto;
+      padding: 0px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: rgb(231, 231, 231);
+    }
+    #body{
+      min-height: 100px;
+      width: 280px;
+      margin: 10px auto;
+      padding: 0px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: rgb(231, 231, 231);
+    }
+    #save{
+      height: 40px;
+      width: 300px;
+      border: none;
+      border-radius: 5px;
+      background-color: rgb(163, 66, 66);
+      color: white;
+    }
+    #notes{
+      width: 300px;
+      margin: 30px auto;
+      padding: 10px;
+      border-radius: 7px;
+      background-color: white;
+      overflow: hidden;
+      box-shadow: 0px 4px 4px rgb(180, 180, 180);
+    }
+
+    hr{
+      height: 2px;
+      width: 150px;
+      margin: 5px 0px;
+      border: none;
+      background-color: black;
+    }
+  </style>
+</head>
+
+<body>
+  <!--Jquery functions-->
+  <script>
+    $(document).ready(function() {
+        $("#add").click(
+                function () {
+                    $("#inputs").fadeIn(1000); // or toggle() if you prefer
+                }
+            );
+
+            $("#save").click(
+                function () {
+                    $("#inputs").fadeOut(500); // or toggle() if you prefer
+                }
+            );
+    });
+  </script>
+
+  <!--Main interface-->
+  <div class="main">
+    <nav>
+      <h1 class="title">NOTE PAD</h1>
+    </nav>
+
+    <div class="display" id="display"></div> <!--Space to display appended note files-->
+
+    <!--Dialog box to accept inputs for writing notes-->
+    <div class="inputs" id="inputs">
+      <input type="text" id="header" placeholder="Your heading goes here...">
+      <input type="text" id="body" placeholder="Type something in here...">
+      <button id="save" onclick="addNote()">Save</button>
+    </div>
+
+    <button id="add"><i class="fi fi-rs-plus"></i></button> <!--Add button opens up the dialog box to allow user to create a new note-->
+  </div>
+  
+  <!--Scripting for notepad functionality-->
+  <script>
+  
+  
+      //Clear input fields when a new note is saved
+      function clearInputs() {
+        var noteHeading = document.getElementById("header");
+        var noteText = document.getElementById("body");
+        
+        noteHeading.value = "";
+        noteText.value = "";
+      }
+      
+  
+      //update the notes page with a new note
+      function addNote() {
+        var display = document.getElementById('display'); //display area to append the notes
+
+        var noteTitle = document.createElement("h4"); //create a new element to display the note header
+        var note = document.createElement("p"); //create a new element to display the note text
+
+        var line = document.createElement("hr"); //dividing line to separate the note heading form the body
+     
+        var noteHeading = document.getElementById("header").value; //input value for text entered in the title section
+        var noteText = document.getElementById("body").value; //input value for text entered in the body section
+ 
+        var notesPage = document.createElement("div"); //create a new element which will contain all the note data
+        notesPage.id = "notes"; //assign an id for styling
+        
+        //append all inputs to be displayed 
+        if (noteHeading = "") {
+          noteTitle.textContent = "No Heading";
+          notesPage.appendChild(noteTitle);
+        } else{
+          noteTitle.textContent = noteHeading;
+          notesPage.appendChild(noteTitle);
+        }
+
+        notesPage.appendChild(line);
+        
+        note.textContent = noteText;
+        notesPage.appendChild(note);
+
+        display.appendChild(notesPage);
+
+     
+     
+        clearInputs();
+     
+     }
+  </script>
+</body>
+
+</html>
